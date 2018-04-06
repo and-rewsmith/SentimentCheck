@@ -4,8 +4,8 @@
   "description": "This extension by debendra256",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "img/myimg.png",
+    "default_icon": "img/myimg.jpg",
     "default_popup": "popup.html",
-    "icons": { "128": "myimg.png" }  
+    "icons": { "128": "img/myimg.jpg" }  
   }
 }
