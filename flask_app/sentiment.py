@@ -9,7 +9,7 @@ def get_sentiment(name):
     for i in range(0, 10):
         try:
             proxy = get_proxy()
-            tweetCriteria = got3.manager.TweetCriteria().setQuerySearch(name).setMaxTweets(150)
+            tweetCriteria = got3.manager.TweetCriteria().setQuerySearch(name).setMaxTweets(100)
             tweets = got3.manager.TweetManager.getTweets(tweetCriteria, proxy=proxy)
             break
         except: #Twitter has a lot of countermeasures around this so it is easier to not specify every exception
@@ -68,22 +68,32 @@ def get_sentiment(name):
     mean_sentiment.append(sum(polarity_per_tweet) / len(polarity_per_tweet))
     mean_sentiment.append(sum(subjectivity_per_tweet) / len(subjectivity_per_tweet))
 
-    print(mean_sentiment)
-    print()
-    print(negative_tweets)
-    print()
-    print(positive_tweets)
-    print()
-    print(top_tweets)
+    #print(mean_sentiment)
+    #print()
+    #print(negative_tweets)
+    #print()
+    #print(positive_tweets)
+    #print()
+    #print(top_tweets)
 
-    charity_dict = {'name':name, 'sentiment':mean_sentiment, 'positive':positive_tweets, 'negative_tweets':negative_tweets, 'top':top_tweets}
+    charity_dict = {'name': name, 'sentiment':mean_sentiment, 'positive':positive_tweets, 'negative':negative_tweets, 'top':top_tweets}
 
     json_dict = json.dumps(charity_dict)
 
+    json_dict = json.loads(json_dict)
+
+    from firebase import firebase
+    firebase = firebase.FirebaseApplication('https://charitycheck-check.firebaseio.com/', None)
+
+    #r = requests.post("https://charitycheck-check.firebaseio.com/", data=json_dict)
+
+    result = firebase.post("/charities", json_dict)
+
     print(json_dict)
+    print(type(json_dict))
 
     #return [mean_sentiment, positive_tweets, negative_tweets, len(tweets)]
 
 if __name__ == "__main__":
-    print(get_sentiment("Trump"))
+    print(get_sentiment("Andrew"))
 
