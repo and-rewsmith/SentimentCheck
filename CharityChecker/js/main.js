@@ -14,6 +14,13 @@ function search(){
     });
 }
 
+document.body.onkeyup = function(e){
+      if(e.keyCode == 13){
+        search();
+      }
+  }
+
+
 var defaultOptions = {
   i18n: {
     selected: '#{value}. Selected #{selected} of #{total}.',
