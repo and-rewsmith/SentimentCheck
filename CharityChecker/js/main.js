@@ -24,7 +24,6 @@ function search(){
 }
 
 function restart() {
-    console.log("ree");
     document.getElementById("searchDiv").style="display: lol";
     document.getElementById("loadDiv").style="display: none";
     document.getElementById("displayDiv").style="display: none";
@@ -38,8 +37,6 @@ document.body.onkeyup = function(e){
 
 
 function displayResults(data) {
-    console.log(data);
-    console.log(data["name"]);
     document.getElementById("displayDiv").style = "display: lol";
     document.getElementById("charityName").innerHTML = data["name"];
     document.getElementById("charityName").style.padding;
