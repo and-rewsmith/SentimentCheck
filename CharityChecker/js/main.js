@@ -40,6 +40,15 @@ function displayResults(data) {
     var sub = Math.round(parseFloat(data["sentiment"][1]) * 100);
     document.getElementById("score1").innerHTML = "Polarity: " + pol + "/100";
     document.getElementById("score2").innerHTML = "Subjectivity: " + sub + "/100";
+	id = data["positive"][0];
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: 'https://publish.twitter.com/oembed?url=https://twitter.com/andypiper/status/' + id,
+        success: function(data) {
+            console.log(data);
+        }
+    });
 }
 
 
