@@ -4,7 +4,7 @@ function search(){
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "https://charitycheck-check.firebaseio.com/" + name + ".json",
+        url: "https://charitycheck-check.firebaseio.com/charities.json?name=" + name,
         success: function(data) {
             if (data == null) {
                 // Let user know what's good
@@ -15,319 +15,330 @@ function search(){
 }
 
 document.body.onkeyup = function(e){
-      if(e.keyCode == 13){
+    if(e.keyCode == 13){
         search();
-      }
-  }
+    }
+}
+
+
+function displayResults(data) {
+    console.log(data);
+    document.getElementById("displayDiv").style = "display: lol";
+    for (var someKey in data) {
+        console.log(data[someKey]["name"]);
+        document.getElementById("charityName").innerHTML = data[someKey]["name"];
+        var pol = Math.round(parseFloat(data[someKey]["sentiment"][0]) * 100);
+        var sub = Math.round(parseFloat(data[someKey]["sentiment"][0]) * 100);
+        document.getElementById("scores").innerHTML = "Polarity: " + pol + "/100. Subjectivity: " + sub + "/100";
+        break;
+    }
+}
+
 
 
 var defaultOptions = {
-  i18n: {
-    selected: '#{value}. Selected #{selected} of #{total}.',
-    complete: 'You have selected #{value}',
-    found: '#{count} suggestions found. Use up or down key to select.',
-    notfound: 'No suggestions found.'
-  },
-  render: {
-    ul: function() {
-      var el = document.createElement('ul');
-      el.classList.add('autocomplete--suggestions');
-      return el;
+    i18n: {
+        selected: '#{value}. Selected #{selected} of #{total}.',
+        complete: 'You have selected #{value}',
+        found: '#{count} suggestions found. Use up or down key to select.',
+        notfound: 'No suggestions found.'
     },
-    li: function(data) {
-      var el = document.createElement('li');
-      el.setAttribute('tabindex', '-1');
-      el.setAttribute('role', 'button');
-      el.innerText = data;
-      return el;
+    render: {
+        ul: function() {
+            var el = document.createElement('ul');
+            el.classList.add('autocomplete--suggestions');
+            return el;
+        },
+        li: function(data) {
+            var el = document.createElement('li');
+            el.setAttribute('tabindex', '-1');
+            el.setAttribute('role', 'button');
+            el.innerText = data;
+            return el;
+        }
     }
-  }
 };
 
-function displayResults(data) {
-    document.getElementById("displayDiv").style = "display: lol";
-}
-
 function autocomplete(inputEl, listFromValue, prefs) {
-  var opened = false;
-  var liveEl, suggestionsEl;
-  var initialised = false;
-  var completed = false;
-  var selected = -1;
-  var savedValue;
-  
-  if (!prefs) { prefs = {} }
-  var options = {
-    i18n: Object.assign({}, defaultOptions.i18n, prefs.i18n || {}),
-    render: Object.assign({}, defaultOptions.render, prefs.render || {})
-  };
+    var opened = false;
+    var liveEl, suggestionsEl;
+    var initialised = false;
+    var completed = false;
+    var selected = -1;
+    var savedValue;
 
-  inputEl.addEventListener('focus', handleInputFocus, false);
-  
-  return {
-    destroy: destroy,
-    close: close
-  };
-  
-  function start() {
-    if (initialised) return;
-    
-    // create live region to indicate results
-    liveEl = document.createElement('div');
-    liveEl.setAttribute('role', 'status');
-    liveEl.setAttribute('aria-live', 'assertive');
-    liveEl.setAttribute('aria-relevant', 'additions');
-    // hide for all but screenreader
-    liveEl.style.position = 'absolute';
-    liveEl.style.pointerEvents = 'none';
-    liveEl.style.opacity = '0';
-    liveEl.style.left = '-9999px';
-    document.body.appendChild(liveEl);
-    
-    // create list of suggestions to show
-    suggestionsEl = options.render.ul();
-    suggestionsEl.style.display = 'none'; // hide by default
-    if (inputEl.nextSibling) {
-      inputEl.parentNode.insertBefore(suggestionsEl, inputEl.nextSibling);
-    } else {
-      inputEl.parentNode.appendChild(suggestionsEl);
-    }
-    
-    // listen to input events
-    inputEl.addEventListener('change', handleInputChange, false);
-    inputEl.addEventListener('input', handleInput, false);
-    inputEl.addEventListener('keydown', handleKey, false);
-    document.addEventListener('focusin', handleDocumentFocus, false);
-    document.addEventListener('click', handleDocumentClick, false);
-    
-    initialised = true;
-  }
-  
-  function stop() {
-    if (!initialised) return;
-    inputEl.removeEventListener('change', handleInputChange, false);
-    inputEl.removeEventListener('input', handleInput, false);
-    inputEl.removeEventListener('keydown', handleKey, false);
-    document.removeEventListener('focusin', handleDocumentFocus, false);
-    document.removeEventListener('click', handleDocumentClick, false);
+    if (!prefs) { prefs = {} }
+    var options = {
+        i18n: Object.assign({}, defaultOptions.i18n, prefs.i18n || {}),
+        render: Object.assign({}, defaultOptions.render, prefs.render || {})
+    };
 
-    liveEl.parentNode.removeChild(liveEl);
-    suggestionsEl.parentNode.removeChild(suggestionsEl);
+    inputEl.addEventListener('focus', handleInputFocus, false);
 
-    initialised = false;
-  }
-  
-  function destroy() {
-    close();
-    stop();
-    inputEl.removeEventListener('focus', handleInputFocus, false);
-  }
-  
-  // interation event handler
-  
-  function handleInputFocus(event) {
-    start();
-    // select all text on focus
-    selectAll();
-    if (completed) {
-      return;
+    return {
+        destroy: destroy,
+        close: close
+    };
+
+    function start() {
+        if (initialised) return;
+
+        // create live region to indicate results
+        liveEl = document.createElement('div');
+        liveEl.setAttribute('role', 'status');
+        liveEl.setAttribute('aria-live', 'assertive');
+        liveEl.setAttribute('aria-relevant', 'additions');
+        // hide for all but screenreader
+        liveEl.style.position = 'absolute';
+        liveEl.style.pointerEvents = 'none';
+        liveEl.style.opacity = '0';
+        liveEl.style.left = '-9999px';
+        document.body.appendChild(liveEl);
+
+        // create list of suggestions to show
+        suggestionsEl = options.render.ul();
+        suggestionsEl.style.display = 'none'; // hide by default
+        if (inputEl.nextSibling) {
+            inputEl.parentNode.insertBefore(suggestionsEl, inputEl.nextSibling);
+        } else {
+            inputEl.parentNode.appendChild(suggestionsEl);
+        }
+
+        // listen to input events
+        inputEl.addEventListener('change', handleInputChange, false);
+        inputEl.addEventListener('input', handleInput, false);
+        inputEl.addEventListener('keydown', handleKey, false);
+        document.addEventListener('focusin', handleDocumentFocus, false);
+        document.addEventListener('click', handleDocumentClick, false);
+
+        initialised = true;
     }
-    updateSuggestions();
-  }
-  
-  function handleInputChange(event) {
-    if (savedValue !== event.target.value) {
-      completed = false;
+
+    function stop() {
+        if (!initialised) return;
+        inputEl.removeEventListener('change', handleInputChange, false);
+        inputEl.removeEventListener('input', handleInput, false);
+        inputEl.removeEventListener('keydown', handleKey, false);
+        document.removeEventListener('focusin', handleDocumentFocus, false);
+        document.removeEventListener('click', handleDocumentClick, false);
+
+        liveEl.parentNode.removeChild(liveEl);
+        suggestionsEl.parentNode.removeChild(suggestionsEl);
+
+        initialised = false;
     }
-  };
-  
-  function handleInput(event) {
-    if (savedValue !== event.target.value) {
-      completed = false;
-      updateSuggestions();
+
+    function destroy() {
+        close();
+        stop();
+        inputEl.removeEventListener('focus', handleInputFocus, false);
     }
-  }
-  
-  function handleDocumentClick(event) {
-    if (containsElement(inputEl, event.target)) {
-      return;
+
+    // interation event handler
+
+    function handleInputFocus(event) {
+        start();
+        // select all text on focus
+        selectAll();
+        if (completed) {
+            return;
+        }
+        updateSuggestions();
     }
-    if (event.target.parentNode === suggestionsEl) {
-      setValueOfItem(event.target);
-      complete();
-    } else {
-      stop();
+
+    function handleInputChange(event) {
+        if (savedValue !== event.target.value) {
+            completed = false;
+        }
+    };
+
+    function handleInput(event) {
+        if (savedValue !== event.target.value) {
+            completed = false;
+            updateSuggestions();
+        }
     }
-    close();
-  }
-  
-  function handleDocumentFocus(event) {
-    if (!containsElement(inputEl, event.target) && !containsElement(suggestionsEl, event.target)) {
-      close();
-      stop();
+
+    function handleDocumentClick(event) {
+        if (containsElement(inputEl, event.target)) {
+            return;
+        }
+        if (event.target.parentNode === suggestionsEl) {
+            setValueOfItem(event.target);
+            complete();
+        } else {
+            stop();
+        }
+        close();
     }
-  }
-    
-  function handleKey(event) {
-    if (!opened) {
-      return;
+
+    function handleDocumentFocus(event) {
+        if (!containsElement(inputEl, event.target) && !containsElement(suggestionsEl, event.target)) {
+            close();
+            stop();
+        }
     }
-    switch (event.keyCode) {
-      case 40: // down
-        event.preventDefault();
-        event.stopPropagation();
-        selectSuggestion(1);
-        break;
-      case 38: // up
-        event.preventDefault();
-        event.stopPropagation();
-        selectSuggestion(-1);
-        break;
-      case 27: // escape
-        event.preventDefault();
-        event.stopPropagation();
-        inputEl.value = savedValue;
+
+    function handleKey(event) {
+        if (!opened) {
+            return;
+        }
+        switch (event.keyCode) {
+            case 40: // down
+                event.preventDefault();
+                event.stopPropagation();
+                selectSuggestion(1);
+                break;
+            case 38: // up
+                event.preventDefault();
+                event.stopPropagation();
+                selectSuggestion(-1);
+                break;
+            case 27: // escape
+                event.preventDefault();
+                event.stopPropagation();
+                inputEl.value = savedValue;
+                inputEl.focus();
+                inputEl.select();
+                close();
+                break;
+            case 13: // enter
+                event.preventDefault();
+                event.stopPropagation();
+                complete();
+                break;
+            case 9: // tab
+                complete();
+                break;
+        }
+    }
+
+
+
+    function selectSuggestion(value) {
+        var inputEls = suggestionsEl.children;
+        selected = (selected + value + inputEls.length) % inputEls.length;
+        var text;
+        for (var i = 0; i < inputEls.length; i++) {
+            if (i === selected) {
+                inputEls[i].classList.add('is-selected');
+                text = setValueOfItem(inputEls[i])
+            } else {
+                inputEls[i].classList.remove('is-selected');
+            }
+        }
+        selectAll();
+        say(fillString(options.i18n.selected, {
+            selected: selected + 1,
+            total: inputEls.length,
+            value: text
+        }));
+    }
+
+    function setValueOfItem(itemEl) {
+        var text = itemEl.innerText;
+        inputEl.value = text;
+        return text;
+    }
+
+    function complete() {
+        savedValue = inputEl.value;
+        completed = true;
+        say(fillString(options.i18n.complete, {
+            value: inputEl.value
+        }));
         inputEl.focus();
+        selectAll();
+        setTimeout(function() {
+            close();
+        }, 0);
+    }
+
+    function open() {
+        opened = true;
+        suggestionsEl.style.display = '';
+    }
+
+    function close() {
+        opened = false;
+        selected = -1;
+        suggestionsEl.style.display = 'none';
+    }
+
+    var sayTimeout;
+    function say(message, delay) {
+        clearTimeout(sayTimeout);
+        sayTimeout = setTimeout(function() {
+            var children = liveEl.children;
+            for (var i = 0; i < children; i++) {
+                children[i].style.display = 'none';
+            }
+            liveEl.insertAdjacentHTML('beforeend', '<p>' + message + '</p>');
+        }, delay || 0);
+    }
+
+    function updateSuggestions() {
+        var val = inputEl.value;
+        savedValue = val;
+        listFromValue(val, function(list) {
+            var index = 0;
+            // render list
+            suggestionsEl.innerHTML = '';
+            list.forEach(function(data) {
+                index++;
+                var liEl = options.render.li(data);
+                suggestionsEl.appendChild(liEl);
+            });
+            if (list.length) {
+                open();
+                say(fillString(options.i18n.found, {
+                    count: list.length,
+                    value: val
+                }), 1500);
+            } else {
+                close();
+                say(fillString(options.i18n.notfound, {
+                    count: 0,
+                    value: val
+                }), 1500);
+            }
+        });
+    }
+
+
+    function selectAll() {
+        var start = 0;
+        var end = inputEl.value.length;
         inputEl.select();
-        close();
-        break;
-      case 13: // enter
-        event.preventDefault();
-        event.stopPropagation();
-        complete();
-        break;
-      case 9: // tab
-        complete();
-        break;
+        setTimeout(function() {
+            inputEl.selectionStart = start;
+            inputEl.selectionEnd = end;
+            inputEl.setSelectionRange(start, end);
+        }, 1);
     }
-  }
-  
-  
-  
-  function selectSuggestion(value) {
-    var inputEls = suggestionsEl.children;
-    selected = (selected + value + inputEls.length) % inputEls.length;
-    var text;
-    for (var i = 0; i < inputEls.length; i++) {
-      if (i === selected) {
-        inputEls[i].classList.add('is-selected');
-        text = setValueOfItem(inputEls[i])
-      } else {
-        inputEls[i].classList.remove('is-selected');
-      }
-    }
-    selectAll();
-    say(fillString(options.i18n.selected, {
-      selected: selected + 1,
-      total: inputEls.length,
-      value: text
-    }));
-  }
-  
-  function setValueOfItem(itemEl) {
-    var text = itemEl.innerText;
-    inputEl.value = text;
-    return text;
-  }
-  
-  function complete() {
-    savedValue = inputEl.value;
-    completed = true;
-    say(fillString(options.i18n.complete, {
-      value: inputEl.value
-    }));
-    inputEl.focus();
-    selectAll();
-    setTimeout(function() {
-      close();
-    }, 0);
-  }
-    
-  function open() {
-    opened = true;
-    suggestionsEl.style.display = '';
-  }
-  
-  function close() {
-    opened = false;
-    selected = -1;
-    suggestionsEl.style.display = 'none';
-  }
-  
-  var sayTimeout;
-  function say(message, delay) {
-    clearTimeout(sayTimeout);
-    sayTimeout = setTimeout(function() {
-      var children = liveEl.children;
-      for (var i = 0; i < children; i++) {
-        children[i].style.display = 'none';
-      }
-      liveEl.insertAdjacentHTML('beforeend', '<p>' + message + '</p>');
-    }, delay || 0);
-  }
-  
-  function updateSuggestions() {
-    var val = inputEl.value;
-    savedValue = val;
-    listFromValue(val, function(list) {
-      var index = 0;
-      // render list
-      suggestionsEl.innerHTML = '';
-      list.forEach(function(data) {
-        index++;
-        var liEl = options.render.li(data);
-        suggestionsEl.appendChild(liEl);
-      });
-      if (list.length) {
-        open();
-        say(fillString(options.i18n.found, {
-          count: list.length,
-          value: val
-        }), 1500);
-      } else {
-        close();
-        say(fillString(options.i18n.notfound, {
-          count: 0,
-          value: val
-        }), 1500);
-      }
-    });
-  }
-  
-  
-  function selectAll() {
-    var start = 0;
-    var end = inputEl.value.length;
-    inputEl.select();
-    setTimeout(function() {
-      inputEl.selectionStart = start;
-      inputEl.selectionEnd = end;
-      inputEl.setSelectionRange(start, end);
-    }, 1);
-  }
 }
 
 
 // helpers
 
 function fillString(str, data) {
-  if (typeof str === 'function') {
-    return str(data);
-  }
-  for (var key in data) {
-    str = str.replace(new RegExp('#\{' + key + '\}', 'g'), data[key]);
-  }
-  return str;
+    if (typeof str === 'function') {
+        return str(data);
+    }
+    for (var key in data) {
+        str = str.replace(new RegExp('#\{' + key + '\}', 'g'), data[key]);
+    }
+    return str;
 }
 
 function containsElement(container, element) {
-  while (element) {
-    if (container === element) {
-      return true;
+    while (element) {
+        if (container === element) {
+            return true;
+        }
+        element = element.parentNode;
     }
-    element = element.parentNode;
-  }
-  return false;
+    return false;
 }
 
 
@@ -336,9 +347,9 @@ function containsElement(container, element) {
 
 
 autocomplete(document.getElementById('autocomplete'), function(value, cb) {
-  cb(values.filter(function(v) {
-    return v.toLowerCase().indexOf(value.toLowerCase()) === 0;
-  }));
+    cb(values.filter(function(v) {
+        return v.toLowerCase().indexOf(value.toLowerCase()) === 0;
+    }));
 });
 
 
@@ -665,4 +676,4 @@ var values = [
     "Young Lives",
     "Youth With A Mission",
     "YouthBuild",
-]
+    ]
