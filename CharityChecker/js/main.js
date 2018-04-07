@@ -10,9 +10,15 @@ function search(){
             for (var someKey in data) {
                 if (data[someKey]["name"].toLowerCase() == name) {
                     displayResults(data[someKey]);
-                    break;
+                    return;
                 }
             }
+	    // if we get here, call Adnrew's endpoint;
+            $.get({
+		dataTyoe: "json",
+		url: "http://127.0.0.1:5000/charity?name="+name,
+		data: "{name: " + name + "}"})
+            document.getElementById("loadDiv").style="display:lol";
         }
     });
 }
