@@ -1,30 +1,31 @@
 <link rel="stylesheet" href="css/style.css">
 <!DOCTYPE html>
 <html lang="en" >
-<body background="background.jpg">
+    <body background="background.jpg">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Autocomplete AA –– Vanilla</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  
-      <link rel="stylesheet" href="css/style.css">
+        <head>
+            <meta charset="UTF-8">
+            <title>Autocomplete AA –– Vanilla</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="css/style.css">
+        </head>
+        <body>
 
-  
-</head>
-<body>
+            <div id="searchDiv">
+                <div class="autocomplete" >
+                    <h1 for="autocomplete">Charity Check</h1>
+                    <input type="text" class="autocomplete" id="autocomplete" autocomplete="off">
+                </div>
 
-  <div class="autocomplete" >
-  <h1 for="autocomplete">Charity Check</h1>
-  <input type="text" class="autocomplete" id="autocomplete" autocomplete="off">
-</div>
+                <script src='https://cdn.polyfill.io/v2/polyfill.min.js'></script>
+                <br>
+                <button onclick="search()">Submit</button>
+            </div>
+            <div id="displayDiv" style="display: none">
+                <h1> CHARITY </h1>
+            </div>
 
-  <script src='https://cdn.polyfill.io/v2/polyfill.min.js'></script>
-<br>
-  <button onclick="search()">Submit</button>
-
-</body>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="js/main.js"></script>
+        </body>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="js/main.js"></script>
 </html>

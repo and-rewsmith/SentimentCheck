@@ -1,6 +1,6 @@
 function search(){
     var name = document.getElementById("autocomplete").value.toLowerCase();
-    console.log(name);
+    document.getElementById("searchDiv").style.display = "none";
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -9,7 +9,7 @@ function search(){
             if (data == null) {
                 // Let user know what's good
                 // Call flask endpoint
-            }
+            } else displayResults(data);
         }
     });
 }
@@ -36,6 +36,10 @@ var defaultOptions = {
     }
   }
 };
+
+function displayResults(data) {
+    document.getElementById("displayDiv").style = "display: lol";
+}
 
 function autocomplete(inputEl, listFromValue, prefs) {
   var opened = false;
