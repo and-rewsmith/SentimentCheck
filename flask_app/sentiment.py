@@ -11,6 +11,8 @@ def get_sentiment(name):
             proxy = get_proxy()
             tweetCriteria = got3.manager.TweetCriteria().setQuerySearch(name).setMaxTweets(100)
             tweets = got3.manager.TweetManager.getTweets(tweetCriteria, proxy=proxy)
+            if len(tweets) == 0:
+                raise ValueError
             break
         except: #Twitter has a lot of countermeasures around this so it is easier to not specify every exception
             pass
