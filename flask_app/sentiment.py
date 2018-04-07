@@ -6,16 +6,18 @@ import json
 
 def get_sentiment(name):
 
-    for i in range(0, 10):
+    tweets = None
+    for i in range(0, 50):
         try:
             proxy = get_proxy()
             tweetCriteria = got3.manager.TweetCriteria().setQuerySearch(name).setMaxTweets(100)
             tweets = got3.manager.TweetManager.getTweets(tweetCriteria, proxy=proxy)
-            if len(tweets) == 0:
-                raise ValueError
             break
         except: #Twitter has a lot of countermeasures around this so it is easier to not specify every exception
             pass
+
+    if len(tweets) == 0:
+        return
 
 
     polarity_per_tweet = []
@@ -94,7 +96,6 @@ def get_sentiment(name):
     print(json_dict)
     print(type(json_dict))
 
-    #return [mean_sentiment, positive_tweets, negative_tweets, len(tweets)]
 
 if __name__ == "__main__":
     print(get_sentiment("Andrew"))
