@@ -1,10 +1,14 @@
 function search(){
+    var name = document.getElementById("input").value.toLowerCase();
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "localhost:5000/charity?name=The\ Salvation\ Army",
+        url: "https://charitycheck-check.firebaseio.com/" + name + ".json",
         success: function(data) {
-            console.log(data);
+            if (data == null) {
+                // Let user know what's good
+                // Call flask endpoint
+            }
         }
     });
 }
