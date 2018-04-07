@@ -1,30 +1,26 @@
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/style.css">
+<!DOCTYPE html>
+<html lang="en" >
+    <body background="background.jpg">
+        <head>
+            <meta charset="UTF-8">
+            <title>Autocomplete AA –– Vanilla</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="css/style.css">
+        </head>
+        <body>
 
-<body background="background.jpg">
-<html lang="en">
-<head>
-  <meta charset="utf-8">
+            <div id="searchDiv">
+                <div class="autocomplete" >
+                    <h1 for="autocomplete">Charity Check</h1>
+                    <input placeholder="Type a charity and press enter..." type="text" class="autocomplete" id="autocomplete" autocomplete="off">
+                </div>
+            </div>
+            <div id="displayDiv" style="display: none">
+                <h1> CHARITY </h1>
+            </div>
 
-  <title>CharityCheck</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-</head>
-
-<body class="align">
-<h1> CharityCheck </h1>
-  <div class="grid">
-
-    <div class="search">
-      <div class="form__field">
-        <input type="search" name="search" placeholder="Seach a charity!" class="form__input">
-        <input onclick="search()" type="submit" value="Search" class="button"/>
-      </div>
-    </div>
-  </div>
-
-</body>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="js/main.js"></script>
+        </body>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="js/main.js"></script>
 </html>
