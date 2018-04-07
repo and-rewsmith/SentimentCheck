@@ -29,9 +29,11 @@ function displayResults(data) {
     console.log(data["name"]);
     document.getElementById("displayDiv").style = "display: lol";
     document.getElementById("charityName").innerHTML = data["name"];
+    document.getElementById("charityName").style.padding;
     var pol = Math.round(parseFloat(data["sentiment"][0]) * 100);
     var sub = Math.round(parseFloat(data["sentiment"][1]) * 100);
-    document.getElementById("scores").innerHTML = "Polarity: " + pol + "/100\n Subjectivity: " + sub + "/100";
+    document.getElementById("score1").innerHTML = "Polarity: " + pol + "/100";
+    document.getElementById("score2").innerHTML = "Subjectivity: " + sub + "/100";
 }
 
 
