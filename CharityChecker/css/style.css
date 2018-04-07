@@ -50,7 +50,7 @@ button {
   background: white;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  max-height: 90vh;
+  max-height: 32vh;
   
 }
 .autocomplete--suggestions > li {

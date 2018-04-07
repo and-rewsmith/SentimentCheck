@@ -38,7 +38,7 @@ function displayResults(data) {
     document.getElementById("charityName").style.padding;
     var pol = Math.round(parseFloat(data["sentiment"][0]) * 100);
     var sub = Math.round(parseFloat(data["sentiment"][1]) * 100);
-    document.getElementById("score1").innerHTML = "Polarity: " + pol + "/100";
+    document.getElementById("score1").innerHTML = "Positivity: " + pol + "/100";
     document.getElementById("score2").innerHTML = "Subjectivity: " + sub + "/100";
 	id = data["positive"][0];
     $.ajax({
