@@ -1,28 +1,35 @@
 <link rel="stylesheet" href="css/main.css">
-
+<!DOCTYPE html>
+<html lang="en" >
 <body background="background.jpg">
-<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-
-  <title>CharityCheck</title>
-
+  <meta charset="UTF-8">
+  <title>Autocomplete AA –– Vanilla</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+      <link rel="stylesheet" href="css/style.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  
 </head>
 
-<body class="align">
-<h1> CharityCheck </h1>
-  <div class="grid">
+<body>
 
-    <div class="search">
-      <div class="form__field">
-        <input type="search" name="search" placeholder="Seach a charity!" class="form__input">
-        <input onclick="search()" type="submit" value="Search" class="button"/>
-      </div>
-    </div>
-  </div>
+  <div class="autocomplete" >
+  <h1 for="autocomplete">Charity Check</h1>
+  <input type="text" class="autocomplete" id="autocomplete" autocomplete="off">
+</div>
+
+  <script src='https://cdn.polyfill.io/v2/polyfill.min.js'></script>
+<br>
+  <button tpye="submit">Submit</button>
+
+
+    <script  src="js/index.js"></script>
+
+
+
 
 </body>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
