@@ -17,6 +17,13 @@ function search(){
     });
 }
 
+function restart() {
+    console.log("ree");
+    document.getElementById("searchDiv").style="display: lol";
+    document.getElementById("loadDiv").style="display: none";
+    document.getElementById("displayDiv").style="display: none";
+}
+
 document.body.onkeyup = function(e){
     if(e.keyCode == 13){
         search();
