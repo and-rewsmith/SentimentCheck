@@ -16,7 +16,7 @@ def get_sentiment(name):
         except: #Twitter has a lot of countermeasures around this so it is easier to not specify every exception
             pass
 
-    if len(tweets) == 0:
+    if tweets == None or len(tweets) == 0:
         return
 
 

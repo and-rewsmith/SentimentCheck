@@ -108,3 +108,13 @@ h3{
 h3:hover {
     cursor: pointer;
 }
+
+.tryButton {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  height: 75px;
+  background: rgb(28, 184, 65); /* this is a green */
+
+}
