@@ -9,7 +9,7 @@ for line in file:
 	line = line[1:-2]
 	charities.append(line)
 
-for entry in charities:
-	get_sentiment(entry)
+for i in range(0, len(charities)//2):
+    get_sentiment(charities[i])
 
 file.close()
