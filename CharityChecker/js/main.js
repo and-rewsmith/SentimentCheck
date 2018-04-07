@@ -1,15 +1,18 @@
 function search(){
     var name = document.getElementById("autocomplete").value.toLowerCase();
     document.getElementById("searchDiv").style.display = "none";
-    $.ajax({
-        type: "GET",
+    $.get({
         dataType: "json",
-        url: "https://charitycheck-check.firebaseio.com/charities.json?name=" + name,
+        url: "https://charitycheck-check.firebaseio.com/charities.json",
+        data: "{name: " + name + "}", 
         success: function(data) {
-            if (data == null) {
-                // Let user know what's good
-                // Call flask endpoint
-            } else displayResults(data);
+            var charity = null;
+            for (var someKey in data) {
+                if (data[someKey]["name"].toLowerCase() == name) {
+                    displayResults(data[someKey]);
+                    break;
+                }
+            }
         }
     });
 }
@@ -23,15 +26,12 @@ document.body.onkeyup = function(e){
 
 function displayResults(data) {
     console.log(data);
+    console.log(data["name"]);
     document.getElementById("displayDiv").style = "display: lol";
-    for (var someKey in data) {
-        console.log(data[someKey]["name"]);
-        document.getElementById("charityName").innerHTML = data[someKey]["name"];
-        var pol = Math.round(parseFloat(data[someKey]["sentiment"][0]) * 100);
-        var sub = Math.round(parseFloat(data[someKey]["sentiment"][0]) * 100);
-        document.getElementById("scores").innerHTML = "Polarity: " + pol + "/100. Subjectivity: " + sub + "/100";
-        break;
-    }
+    document.getElementById("charityName").innerHTML = data["name"];
+    var pol = Math.round(parseFloat(data["sentiment"][0]) * 100);
+    var sub = Math.round(parseFloat(data["sentiment"][1]) * 100);
+    document.getElementById("scores").innerHTML = "Polarity: " + pol + "/100\n Subjectivity: " + sub + "/100";
 }
 
 
