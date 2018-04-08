@@ -2,6 +2,8 @@
   font: 20px/1.5 Helvetica;
     margin-left: auto;
     margin-right: auto;
+    margin: 0;
+    padding:0;
 }
 
 .autocomplete {
@@ -14,6 +16,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 60%;
+    height: 10%;
     
     }
 
@@ -22,8 +25,10 @@ label {
 }
 
 input, button {
-  border: 1px solid;
-  padding: 5px 10px;
+  font-size: 2vh;
+  width: 2vh;
+  /*border: 1px solid;
+  padding: 5px 10px;*/
   align-content: center;
 }
 
@@ -38,15 +43,15 @@ button {
 }
 
 .autocomplete--suggestions {
+  font-size: 2vh;
   position: relative;
   z-index: 10000;
   /*width: 60%;*/
   padding: 5px 0;
   margin-left: 20%;
   margin-right: 20%;
-
-  border: 1px solid #777;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  /*border: 1px solid #777;*/
+  /*box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);*/
   background: white;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
@@ -54,6 +59,8 @@ button {
   
 }
 .autocomplete--suggestions > li {
+    font-size: 2vh;
+
   list-style: none;
   margin: -3px 0;
   padding: 3px 10px;
@@ -70,11 +77,11 @@ button {
 }
 
 h1{
-  color: white;
-  font-size: 80px;
+  color: #ffffff;
+  font-size: 8vmin;
   font-weight: bold;
   text-align: center;
-  padding-top: 25%;
+  padding-top: 30vh;;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -117,4 +124,18 @@ h3:hover {
   height: 75px;
   background: rgb(28, 184, 65); /* this is a green */
 
+}
+
+body{
+  background-image: url(../img/background.jpg) ;
+			background-position: center center;
+			background-repeat:  no-repeat;
+			background-attachment: fixed;
+			background-size:  cover;
+			background-color: #999;
+}
+
+hr{
+  visibility: hidden;
+  margin-bottom: 3vh;
 }
