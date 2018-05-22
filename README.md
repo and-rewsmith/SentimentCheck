@@ -1,4 +1,4 @@
-# CharityCheck
+# SentimentCheck
 
 ## Description
 This project was made for WiCs Hack for Humanity 2018. In this competition, our team won the top prize: 
