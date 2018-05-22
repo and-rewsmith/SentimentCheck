@@ -5,7 +5,7 @@ This project was made for WiCs Hack for Humanity 2018. In this competition, our 
 
 __Winner: Best Humanity Hack__
 
-We created a sentiment analysis web-service for Twitter, where users can obtain sentiment data for any given keyword. Our service also returns embedded html for the most positive/negative/popular tweets.
+We created a sentiment analysis web-service for Twitter, where users can obtain sentiment data for any given keyword. Our service also returns embedded html for the most positive/negative/popular tweets. The theme for the hackathon was humanity, so we aimed this sentiment checking tool towards charities.
 
 ## Design
 We used Flask to model the backend of this service. When a user hits the main endpoint (with the desired search term in the GET param), our service attempts to respond with a json dictionary of sentiment data (see above). 
