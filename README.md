@@ -16,6 +16,6 @@ There are two cases from this point. Either:
 
 If there is archived sentiment for the keyword, we respond a json dictionary of sentiment data.
 
-If there is no archived sentiment for the keyword, we begin scraping twitter for relevant tweets and respond with a "We are working on it." message. When the user makes a request later, there will be archived sentiment and we can give a real response.
+If there is no archived sentiment for the keyword, we begin scraping twitter for relevant tweets and respond with a "We are working on it" message. When the user makes a request later, there will be archived sentiment and we can give a real response.
 
 When this goes live we will use cron-jobs to keep our persisted data up to date.
