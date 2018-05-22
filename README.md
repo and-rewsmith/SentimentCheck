@@ -18,4 +18,6 @@ If there is archived sentiment for the keyword, we respond a json dictionary of 
 
 If there is no archived sentiment for the keyword, we begin scraping twitter for relevant tweets and respond with a "We are working on it" message. When the user makes a request later, there will be archived sentiment and we can give a real response.
 
+Additionally, we did not use the Twitter API to obtain these tweets. We scrape the site manually using rotating proxies. 
+
 When this goes live we will use cron-jobs to keep our persisted data up to date.
