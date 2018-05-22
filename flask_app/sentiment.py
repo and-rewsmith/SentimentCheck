@@ -94,7 +94,7 @@ def get_sentiment(name):
 
     json_dict = json.loads(json_dict)
 
-    from firebase import firebase
+    from firebase import firebase #importing here to stop weird bug
     firebase = firebase.FirebaseApplication("https://charity-check.firebaseio.com/", None)
 
     #r = requests.post("https://charitycheck-check.firebaseio.com/", data=json_dict)
